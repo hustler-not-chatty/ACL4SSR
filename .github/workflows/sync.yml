@@ -1,0 +1,34 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Rebase Upstream
+
+# Controls when the workflow will run
+on:
+  schedule:
+    # Runs in 1st of every month
+    - cron: '30 3 1,11,21 * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  merge-upstream:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: master
+          fetch-depth: 0
+      # Runs a single command using the runners shell
+      - name: Rebase Upstream
+        uses: imba-tjd/rebase-upstream-action@master
+        with:
+          upstream: ACL4SSR/ACL4SSR
+          branch: master
